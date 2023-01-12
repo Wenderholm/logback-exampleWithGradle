@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<configuration>-->
+
+<!--    <property name="HOME_LOG" value="${user.dir}/logs/pl.zajavka.log"/>-->
+
+<!--    <appender name="JAKASNAZWA" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+    <!--    <appender name="FILE" class="ch.qos.logback.core.FileAppender">-->
+    <!--        gdzie ma byc zapisane dane -->
+    <!--        <file>${HOME_LOG}</file>-->
+    <!--        czy plik ma byc dodawany do poprzedniego czy tez nadpisywany jezeli false-->
+    <!--        <append>ture</append>-->
+    <!--        czyszczenie-->
+    <!--        <immediateFlush>true</immediateFlush>-->
+    <!--        <encoder>-->
+    <!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</pattern>-->
+    <!--        </encoder>-->
+    <!--    </appender>-->
+
+
+    <!--    <logger name="pl.zajavka.logger1" level="debug" additivity="false">-->
+    <!--        <appender-ref ref="JAKASNAZWA"/>-->
+    <!--    </logger>-->
+    <!--    <logger name="pl.zajavka.logger2" level="info" additivity="false">-->
+    <!--        <appender-ref ref="JAKASNAZWA"/>-->
+    <!--    </logger>-->
+
+    <!--logowanie do pliku w tym przypadku jezeli additivity jest na false to co bedzie logowane w paczce logger2 bedzie zapisywane
+    do pliku a nie bedzie wyswietlane w konsoli. jezeli chcemy zeby było wpisane w konsoli zmieniamy na true-->
+    <!--    <logger name="pl.zajavka.logger2" level="info" additivity="false">-->
+    <!--        <appender-ref ref="FILE"/>-->
+    <!--    </logger>-->
+
+<!--    <root level="warn">-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--    </root>-->
+<!--</configuration>-->
+
+
+
+<configuration>
+    <property name="HOME_LOG" value="${user.dir}/logs/pl.zajavka.log"/>
+    <property name="HOME_LOG_ROLLING" value="${user.dir}/logs/pl.zajavka-rolling.log"/>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${HOME_LOG_ROLLING}</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>logs/archived/pl.zajavka-rolling.%d{s}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <totalSizeCap>1GB</totalSizeCap>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <logger name="pl.zajavka.loggerloop" level="debug" additivity="false">
+        <appender-ref ref="FILE-ROLLING"/>
+    </logger>
+    <root level="warn">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</configuration>
+

@@ -3,17 +3,26 @@ plugins {
 }
 
 group 'pl.zajavka'
-version '1.0-SNAPSHOT'
+version '0.0.1'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-}
 
-test {
-    useJUnitPlatform()
+// implementacja ta sama zaciaga sobie dodatkowo logback core ooraz slf4j-api ponieważ od tego zależy
+// mozna to zobaczyć w pliku:
+// External Libraries/Gradle/logbak-classic-1.2.11.jar/META-INF/meven/ch/qos/logbock/logbock-classic/pom.xml
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version:'1.2.11'
+
+
+//    implementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.36'
+//    implementation group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.36'
+
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
 }
